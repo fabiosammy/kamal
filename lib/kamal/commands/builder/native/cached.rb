@@ -9,7 +9,7 @@ class Kamal::Commands::Builder::Native::Cached < Kamal::Commands::Builder::Nativ
 
   def push
     docker :buildx, :build,
-      "--push",
+      "--output=type=image,push=#{!disabled_registry_server?}",
       *build_options,
       build_context
   end

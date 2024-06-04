@@ -19,7 +19,7 @@ class Kamal::Commands::Builder::Native::Remote < Kamal::Commands::Builder::Nativ
 
   def push
     docker :buildx, :build,
-    "--push",
+    "--output=type=image,push=#{!disabled_registry_server?}",
     "--platform", platform,
     "--builder", builder_name,
     *build_options,

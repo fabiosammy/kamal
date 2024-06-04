@@ -5,7 +5,10 @@ class Kamal::Cli::Build < Kamal::Cli::Base
 
   desc "deliver", "Build app and push app image to registry then pull image on servers"
   def deliver
+    # TODO: We need a own "build" method instead of "push" (the docker remote build and push at same time)
     push
+
+    # TODO: Skip if we disable the registry
     pull
   end
 

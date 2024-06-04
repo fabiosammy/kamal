@@ -285,11 +285,11 @@ class Kamal::Configuration
         raise ArgumentError, "Missing required configuration for #{key}" unless raw_config[key].present?
       end
 
-      if raw_config.registry["username"].blank?
+      if raw_config.registry["username"].blank? && raw_config.registry["disable_login"] != true && raw_config.registry["disabled"] != true
         raise ArgumentError, "You must specify a username for the registry in config/deploy.yml"
       end
 
-      if raw_config.registry["password"].blank?
+      if raw_config.registry["password"].blank? && raw_config.registry["disable_login"] != true && raw_config.registry["disabled"] != true
         raise ArgumentError, "You must specify a password for the registry in config/deploy.yml (or set the ENV variable if that's used)"
       end
 

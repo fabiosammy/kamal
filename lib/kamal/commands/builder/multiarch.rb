@@ -15,7 +15,7 @@ class Kamal::Commands::Builder::Multiarch < Kamal::Commands::Builder::Base
 
   def push
     docker :buildx, :build,
-      "--push",
+      "--output=type=image,push=#{!disabled_registry_server?}",
       "--platform", platform_names,
       "--builder", builder_name,
       *build_options,
