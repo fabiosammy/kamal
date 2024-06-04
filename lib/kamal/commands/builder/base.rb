@@ -6,10 +6,13 @@ class Kamal::Commands::Builder::Base < Kamal::Commands::Base
   delegate :args, :secrets, :dockerfile, :target, :local_arch, :local_host, :remote_arch, :remote_host, :cache_from, :cache_to, :ssh, to: :builder_config
 
   def clean
+    # TODO: we need to clean BEFORE the BUILD only
+    return if disabled_registry_server?
     docker :image, :rm, "--force", config.absolute_image
   end
 
   def pull
+    return if disabled_registry_server?
     docker :pull, config.absolute_image
   end
 
@@ -32,6 +35,10 @@ class Kamal::Commands::Builder::Base < Kamal::Commands::Base
 
 
   private
+    def disabled_registry_server?
+      config.registry["disabled"]
+    end
+
     def build_tags
       [ "-t", config.absolute_image, "-t", config.latest_image ]
     end

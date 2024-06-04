@@ -2,6 +2,7 @@ class Kamal::Commands::Registry < Kamal::Commands::Base
   delegate :registry, to: :config
 
   def login
+    return if registry["disabled"] || registry["disable_login"]
     docker :login,
       registry["server"],
       "-u", sensitive(Kamal::Utils.escape_shell_value(lookup("username"))),

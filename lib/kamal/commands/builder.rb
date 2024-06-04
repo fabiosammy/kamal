@@ -9,6 +9,7 @@ class Kamal::Commands::Builder < Kamal::Commands::Base
   end
 
   def target
+    # TODO: When remote, use the remote context
     case
     when !config.builder.multiarch? && !config.builder.cached?
       native

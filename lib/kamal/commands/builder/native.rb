@@ -12,9 +12,13 @@ class Kamal::Commands::Builder::Native < Kamal::Commands::Builder::Base
   end
 
   def push
-    combine \
-      docker(:build, *build_options, build_context),
-      docker(:push, config.absolute_image),
-      docker(:push, config.latest_image)
+    if disabled_registry_server?
+      docker(:build, *build_options, build_context)
+    else
+      combine \
+        docker(:build, *build_options, build_context),
+        docker(:push, config.absolute_image),
+        docker(:push, config.latest_image)
+    end
   end
 end
